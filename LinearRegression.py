@@ -10,5 +10,10 @@ plt.plot(x_train,y_train,marker='x',c='r')
 plt.title("test")
 plt.show()
 
-
+def pridictions(x,w,b):
+    m=x.shape[0]
+    f_wb = np.zeros(m)
+    for i in range(m):
+        f_wb[i]=w*x[i] + b
+    return f_wb
 
