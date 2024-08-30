@@ -2,11 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-
-x_train = np.array([1.0, 2.0]) 
-y_train = np.array([300.0, 500.0])
-
-
 def pridictions(x,w,b):
     m=x.shape[0]
     f_wb = np.zeros(m)
@@ -52,3 +47,20 @@ def gradient_descent(x,y,w_in,b_in ,alpha,number_of_iterations):
             print(f"in iteration:{i} w={w} b={b} cost={cost_function(x,y,w,b)} ")    
     return w,b,j_history,p_history    
 
+
+x_train = np.array([1.5, 2,1.2,1.8,2.5]) 
+y_train = np.array([350,450,280,390,600])
+
+w,b,jhist,phist=gradient_descent(x_train,y_train,0,0,0.01,10000)
+whist = []
+bhist = []
+for i in range(len(phist)):
+    whist.append(phist[i][0])
+    bhist.append(phist[i][1])
+fig = plt.figure()
+ax = fig.add_subplot(111,projection='3d')
+ax.plot(whist,bhist,jhist)
+ax.set_xlabel('w')
+ax.set_ylabel('b')
+ax.set_zlabel('cost function')
+plt.show()
