@@ -15,6 +15,12 @@ def cost_function(x,y,w,b):
     for i in range(m):
         cost+=(single_itiration_val(w,x[i],b)-y[i])**2
     return cost /(2*m)    
+def z_score_normalization(X):
+    mu = np.mean(X,0)
+    sigma = np.std(X,0)
+    X_normailzed = (X-mu)/sigma
+    return mu,sigma,X_normailzed
+
 def gradients(X:np.ndarray,y:np.ndarray,w:np.ndarray,b:float):
     m,n=X.shape
     djw=np.zeros(n)
@@ -47,8 +53,9 @@ x_train=np.random.random_sample(15).reshape(3,5)
 y_train = np.random.random_sample(3)
 w,b,jhist = gradient_descent(x_train,y_train,[0,0,0,0,0],0,0.01,10000)
 
-y_hat=[]
-for i in range(x_train.shape[0]):
-    y_hat.append(single_itiration_val(w,x_train[i],b))
-print(y_train)
-print(y_hat)    
+mu,sigma,X_normalized=z_score_normalization(x_train)
+w_normal,b_normal,jhist_normal=gradient_descent(X_normalized,y_train,[0,0,0,0,0],0,0.01,10000)
+
+y_pred_unormal = np.dot(x_train,w)+b
+y_pred_normal = np.dot(X_normalized,w_normal)+b_normal
+
